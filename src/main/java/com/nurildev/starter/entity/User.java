@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -27,8 +29,12 @@ public class User {
     @Column(unique = true, nullable = false)
     @Email
     private String email;
-    @Column(unique = false, nullable = false)
-    private String role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
     @Column(unique = false, nullable = false, name = "created_by")
     private String createdBy;
     @Column(unique = false, nullable = false, name = "creation_date")
