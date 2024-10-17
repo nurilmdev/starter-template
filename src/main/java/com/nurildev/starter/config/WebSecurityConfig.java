@@ -82,7 +82,7 @@ public class WebSecurityConfig {
         http
                 .csrf(csrf->csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/register", "/css/**", "/js/**", "/images/**", "/webjars/**", "/favicon" +
+                        .requestMatchers("/login", "/register", "/styles/**", "/js/**", "/images/**", "/webjars/**", "/favicon" +
                         ".ico").permitAll()//izinkan request ke resources untuk tampilan login
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/manager/**").hasRole("MANAGER")
