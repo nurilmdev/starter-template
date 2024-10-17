@@ -3,6 +3,7 @@ package com.nurildev.starter.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "mst_user")
 public class User {
@@ -37,7 +39,7 @@ public class User {
     private Set<Role> roles = new HashSet<>();
     @Column(unique = false, nullable = false, name = "created_by")
     private String createdBy;
-    @Column(unique = false, nullable = false, name = "creation_date")
+    @Column(unique = false, name = "creation_date")
     private Timestamp creationDate;
     @Column(unique = false, name = "last_update_by")
     private String lastUpdateBy;
