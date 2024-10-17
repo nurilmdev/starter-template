@@ -14,6 +14,6 @@ public class AdminController {
     @GetMapping("/")
     public String home(Principal principal, Model model){
         model.addAttribute("userLogin", principal.getName());
-        return "home";
+        return "admin";
     }
 }
