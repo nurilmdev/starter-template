@@ -8,8 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -19,32 +18,37 @@ import java.util.Set;
 @Table(name = "mst_user")
 public class User {
     @Id
-    @GeneratedValue
-    @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(unique = false, nullable = false)
     private String username;
+
     @Column(unique = false, nullable = false)
     private String password;
+
     @Column(unique = false, nullable = false)
     private String name;
+
     @Column(unique = true, nullable = false)
     @Email
     private String email;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserRoles> userRoles = new ArrayList<>();
+
     @Column(unique = false, nullable = false, name = "created_by")
     private String createdBy;
+
     @Column(unique = false, name = "creation_date")
     private Timestamp creationDate;
+
     @Column(unique = false, name = "last_update_by")
     private String lastUpdateBy;
+
     @Column(unique = false, name = "last_update_date")
     private Timestamp lastUpdateDate;
+
     @Column(unique = false, name = "enabled_flag")
     private String enabledFlag;
 }

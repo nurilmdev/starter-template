@@ -39,22 +39,38 @@
 
                 <div class="col-lg-9">
                   <!-- small box / card dashboard-->
-                  <form method="post" th:action="@{/admin/save-user}" th:object="${newUser}">
+                  <form method="post" th:action="@{/admin/save-user}" th:object="${newUser}" class="">
                     <div class="form-group">
-                      <label for="nama">Nama Lengkap</label>
-                      <input type="text" class="form-control" id="nama" th:field="*{name}">
+                      <label for="name">Nama Lengkap</label>
+                      <input type="text" class="form-control" th:errorclass="is-invalid" id="name" th:field="*{name}">
+<!--                      <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Invalid name</p>-->
+                      <p class="text-sm text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                        Please provide a valid city.
+                      </p>
+<!--                      <div class="alert alert-primary" role="alert" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">-->
+<!--                        This is a primary alert—check it out!-->
+<!--                      </div>-->
                     </div>
                     <div class="form-group">
                       <label for="email">Email</label>
-                      <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="email@example.com">
+                      <input type="text" class="form-control" th:errorclass="is-invalid" id="email" th:field="*{email}" placeholder="email@example.com">
+                      <p class="text-sm text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                        Please provide a valid city.
+                      </p>
                     </div>
                     <div class="form-group">
                       <label for="username">Username</label>
-                      <input type="text" class="form-control" id="username" th:field="*{username}">
+                      <input type="text" class="form-control" th:errorclass="is-invalid" id="username" th:field="*{username}">
+                      <p class="text-sm text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
+                        Please provide a valid city.
+                      </p>
                     </div>
                     <div class="form-group">
                       <label for="password">Password</label>
-                      <input type="text" class="form-control" id="password" th:field="*{password}">
+                      <input type="text" class="form-control" th:errorclass="is-invalid" id="password" th:field="*{password}">
+                      <p class="text-sm text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+                        Please provide a valid city.
+                      </p>
                     </div>
                     <div class="form-group">
                       <label for="role">Role</label>
@@ -64,13 +80,16 @@
 <!--                        <option th:each="i:*{roles}" th:value="${i.role_id}" th:text="${i.name}">1</option>-->
 <!--                      </select>-->
 
-                      <select th:field="*{roleId}" id="role" class="form-control">
+                      <select th:field="*{roleId}" id="role" class="form-control" th:errorclass="is-invalid">
                         <option selected="true" value=""
                                 th:text="choose">Choose</option>
                         <option th:each="role : ${roles}"
-                                th:value="${role.role_id}"
+                                th:value="${role.id}"
                                 th:text="${role.name}">Wireframe</option>
                       </select>
+                      <div class="text-sm text-danger" th:if="${#fields.hasErrors('roleId')}" th:errors="*{roleId}">
+                        Please provide a valid city.
+                      </div>
                     </div>
                     <!--<div class="form-group">
                       <label for="exampleFormControlTextarea1">Example textarea</label>
