@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface UserService {
-    void save(User user, Role role, String createdBy);
+    void save(User user, List<Long> roleIds, String createdBy);
     List<User> getAllUsers();
 
     List<User> findUser(String keyword);

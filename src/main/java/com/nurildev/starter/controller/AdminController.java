@@ -80,9 +80,6 @@ public class AdminController {
             model.addAttribute("roles", roles);
             return "/admin/add-user";
         }
-        List<Role> roles = addUserVo.getRoleId().stream()
-                .map(roleId -> roleService.getById(roleId))
-                .collect(Collectors.toList());
 
         User newUser = User.builder()
                 .name(addUserVo.getName())
@@ -95,9 +92,7 @@ public class AdminController {
                 .enabledFlag("Y")
                 .build();
 
-        for (Role role: roles) {
-            userService.save(newUser, role, principal.getName());
-        }
+        userService.save(newUser, addUserVo.getRoleIdList(), principal.getName());
 
         model.addAttribute("userList", userService.getAllUsers());
         return "redirect:manage-user";

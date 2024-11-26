@@ -34,5 +34,5 @@ public class AddUserVo {
     private String password;
 
     @NotEmpty(message = "Harus pilih salah satu role")
-    private List<Long> roleId;
+    private List<Long> roleIdList;
 }

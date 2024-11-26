@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,15 +25,21 @@ public class UserServiceImpl implements UserService {
     private UserRolesRepo userRolesRepo;
 
     @Override
-    public void save(User user, Role role, String createdBy) {
-        UserRoles userRoles = new UserRoles();
-        roleRepo.findById(role.getId()).orElseThrow(()-> new RoleNotFoundException("Role not found"));
-        userRoles.setRole(role);
-        userRoles.setUser(user);
-        userRoles.setCreatedBy(createdBy);
-        userRoles.setCreationDate(new Timestamp(System.currentTimeMillis()));
-        userRoles.setEnabledFlag("Y");
-        userRolesRepo.save(userRoles);
+    public void save(User user, List<Long> roleIds, String createdBy) {
+        List<Role> roles = roleIds.stream()
+            .map(roleId -> roleRepo.findById(roleId)
+                .orElseThrow(() -> new RoleNotFoundException("Role not found")))
+            .collect(Collectors.toList());
+
+        for (Role role:roles) {
+            UserRoles userRoles = new UserRoles();
+            userRoles.setRole(role);
+            userRoles.setUser(user);
+            userRoles.setCreatedBy(createdBy);
+            userRoles.setCreationDate(new Timestamp(System.currentTimeMillis()));
+            userRoles.setEnabledFlag("Y");
+            userRolesRepo.save(userRoles);
+        }
     }
 
     @Override

@@ -34,9 +34,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-body">
-
               <div class="row">
-
                 <div class="col-lg-9">
                   <!-- small box / card dashboard-->
                   <form method="post" th:action="@{/admin/save-user}" th:object="${newUser}" class="">
@@ -47,9 +45,6 @@
                       <p class="text-sm text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
                         Please provide a valid city.
                       </p>
-<!--                      <div class="alert alert-primary" role="alert" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">-->
-<!--                        This is a primary alert—check it out!-->
-<!--                      </div>-->
                     </div>
                     <div class="form-group">
                       <label for="email">Email</label>
@@ -72,29 +67,45 @@
                         Please provide a valid city.
                       </p>
                     </div>
-                    <div class="form-group">
-                      <label for="role">Role</label>
-                      <!-- cara 1 -->
-<!--                      <select class="form-control" id="role" >-->
-<!--                        <option disabled="true" selected="true">Choose</option>-->
-<!--                        <option th:each="i:*{roles}" th:value="${i.role_id}" th:text="${i.name}">1</option>-->
-<!--                      </select>-->
 
-                      <select th:field="*{roleId}" id="role" class="form-control" th:errorclass="is-invalid">
+                    <!--Role Dropdown-->
+                    <!--<div class="form-group">
+                      <label for="role">Role</label>
+                      &lt;!&ndash; cara 1 &ndash;&gt;
+&lt;!&ndash;                      <select class="form-control" id="role" >&ndash;&gt;
+&lt;!&ndash;                        <option disabled="true" selected="true">Choose</option>&ndash;&gt;
+&lt;!&ndash;                        <option th:each="i:*{roles}" th:value="${i.role_id}" th:text="${i.name}">1</option>&ndash;&gt;
+&lt;!&ndash;                      </select>&ndash;&gt;
+
+                      <select th:field="*{roleIdList}" id="role" class="form-control" th:errorclass="is-invalid">
                         <option selected="true" value=""
                                 th:text="choose">Choose</option>
                         <option th:each="role : ${roles}"
                                 th:value="${role.id}"
                                 th:text="${role.name}">Wireframe</option>
                       </select>
-                      <div class="text-sm text-danger" th:if="${#fields.hasErrors('roleId')}" th:errors="*{roleId}">
+                      <div class="text-sm text-danger" th:if="${#fields.hasErrors('roleIdList')}" th:errors="*{roleIdList}">
+                        Please provide a valid city.
+                      </div>
+                    </div>-->
+
+                    <!-- Role Checkbox -->
+                    <div class="form-group">
+                      <label for="role">Role</label>
+                      <div class="mb-3" id="role">
+                        <div th:each="role : ${roles}" class="form-check">
+                          <input class="form-check-input" type="checkbox"
+                                 th:field="*{roleIdList}"
+                                 th:value="${role.id}"
+                                 th:id="'role-' + ${role.id}">
+                          <label class="form-check-label" th:for="'role-' + ${role.id}" th:text="${role.name}"></label>
+                        </div>
+                      </div>
+                      <div class="text-sm text-danger" th:if="${#fields.hasErrors('roleIdList')}" th:errors="*{roleIdList}">
                         Please provide a valid city.
                       </div>
                     </div>
-                    <!--<div class="form-group">
-                      <label for="exampleFormControlTextarea1">Example textarea</label>
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                    </div>-->
+
                     <div class="d-flex justify-content-between row p-2">
                       <button type="reset" class="btn btn-secondary">reset</button>
                       <a th:href="@{/admin/manage-user}" type="submit" class="btn btn-info">Batal</a>
@@ -102,16 +113,13 @@
                     </div>
                   </form>
                 </div>
-
-
+              </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </section>
 </div>
-
 </body>
 </html>
